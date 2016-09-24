@@ -43,24 +43,26 @@ exports.postNewPoll = function (req, res, next) {
     options.push({title: opt1, votes: 0});
     options.push({title: opt2, votes: 0});
 
-    var poll = new Poll({
+
+
+    const poll = new Poll({
         postedBy: "dummyID",
         question: req.body.title,
         options: options,
         comments: new Array(),
         datePosted: Date.now(),
-        pollId: createGUID(),
+        pollId: parseInt(createGUID()),
     });
 
     poll.save((err) =>
     {
+        if (err){
+            return next(err);
+        }
         //some error handling here
+        req.flash('success', { msg: 'Poll successfully posted!' });
+        res.redirect('/newpoll');
     });
-
-
-
-
-
 
 };
 
