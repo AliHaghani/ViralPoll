@@ -8,7 +8,7 @@ const pollSchema = new mongoose.Schema({
     postedBy: User,
     question: String,
     options: Array[{title: String, votes: Number }],
-    comments: Array,
+    comments: Array[{ value: String, userID: Number}],
     datePosted: Date,
 
 }, { timestamps: true });
