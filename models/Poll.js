@@ -5,10 +5,10 @@ const mongoose = require('mongoose');
 
 const pollSchema = new mongoose.Schema({
     pollId: { type: Number, unique: true },
-    postedBy: User,
+    postedBy: String, // temporary, should be user
     question: String,
-    options: Array[{title: String, votes: Number }],
-    comments: Array[{ value: String, userID: Number}],
+    options: [{title: String, votes: Number}],
+    comments: [{ value: String, userID: Number}],
     datePosted: Date,
 
 }, { timestamps: true });

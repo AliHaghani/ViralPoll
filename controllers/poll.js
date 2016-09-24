@@ -9,6 +9,17 @@ const User = require('../models/User');
 const Poll = require('../models/Poll');
 
 
+/**
+ * GET /newpoll
+ * New poll page.
+ */
+exports.getNewPoll = (req, res) => {
+    res.render('newpoll', {
+        title: 'New Poll'
+    });
+};
+
+
 
 /**
  * POST /poll
