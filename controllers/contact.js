@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const path = require('path');
 const transporter = nodemailer.createTransport({
   service: 'SendGrid',
   auth: {
@@ -15,6 +16,16 @@ exports.getContact = (req, res) => {
   res.render('contact', {
     title: 'Contact'
   });
+};
+
+/**
+ * GET /contactclone
+ * @param req
+ * @param res
+ */
+exports.getContactClone = (req, res) =>
+{
+  res.sendFile(path.join(__dirname + "/../views/contactclone.html"));
 };
 
 /**

@@ -41,6 +41,18 @@ describe('GET /contact', () => {
   });
 });
 
+describe('GET /contactclone', () =>
+{
+  it('should return 200 OK', (done) =>
+  {
+    request(app)
+        .get('/contactclone')
+        .expect(200, done);
+
+  });
+
+});
+
 describe('GET /random-url', () => {
   it('should return 404', (done) => {
     request(app)
