@@ -20,7 +20,6 @@ exports.getNewPoll = (req, res) => {
 };
 
 
-
 /**
  * POST /poll
  * Submit a poll made by user.
