@@ -127,6 +127,8 @@ app.get('/contact', contactController.getContact);
 app.get('/contactclone', contactController.getContactClone);
 app.post('/contact', contactController.postContact);
 app.get('/newpoll', newPollController.getNewPoll);
+app.post('/newpoll', newPollController.postNewPoll);
+
 app.get('/account', passportConfig.isAuthenticated, userController.getAccount);
 app.post('/account/profile', passportConfig.isAuthenticated, userController.postUpdateProfile);
 app.post('/account/password', passportConfig.isAuthenticated, userController.postUpdatePassword);
