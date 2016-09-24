@@ -51,7 +51,6 @@ exports.postNewPoll = function (req, res, next) {
         options: options,
         comments: new Array(),
         datePosted: Date.now(),
-        pollId: parseInt(createGUID()),
     });
 
     poll.save((err) =>
@@ -67,15 +66,6 @@ exports.postNewPoll = function (req, res, next) {
 };
 
 
-function createGUID() {
-    function random() {
-        return Math.floor((1 + Math.random()) * 0x10000)
-            .toString(16)
-            .substring(1);
-    }
-    return random() + random() + '-' + random() + '-' + random() + '-' +
-        random() + '-' + random() + random() + random();
-}
 
 /**
  * POST /poll
