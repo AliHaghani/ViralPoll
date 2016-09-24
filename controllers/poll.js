@@ -25,7 +25,10 @@ exports.getNewPoll = (req, res) => {
  * POST /poll
  * Submit a poll made by user.
  */
-exports.newPoll = function (userId, question, options) {
+exports.newPoll = function (req, res, next) {
+    req.assert('title', "Question cannot be blank.").notEmpty();
+    req.assert('option1', "Option 1 cannot be blank.").notEmpty();
+    req.assert('option2', "Option 2 cannot blank.").notEmpty();
 
     var poll = new Poll({
         postedBy: userId,
@@ -34,7 +37,7 @@ exports.newPoll = function (userId, question, options) {
         comments: new Array(),
         datePosted: Date.now(),
         pollId: generateUUID(),
-    })
+    });
 
 
 
