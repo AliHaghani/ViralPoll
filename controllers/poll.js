@@ -21,22 +21,44 @@ exports.getNewPoll = (req, res) => {
 
 
 /**
- * POST /poll
+ * POST /newpoll
  * Submit a poll made by user.
  */
-exports.newPoll = function (req, res, next) {
+exports.postNewPoll = function (req, res, next) {
     req.assert('title', "Question cannot be blank.").notEmpty();
     req.assert('option1', "Option 1 cannot be blank.").notEmpty();
-    req.assert('option2', "Option 2 cannot blank.").notEmpty();
+    req.assert('option2', "Option 2 cannot be blank.").notEmpty();
+
+    const errors = req.validationErrors();
+
+    if (errors) {
+        req.flash('errors', errors);
+        return res.redirect('/newpoll');
+    }
+
+    let opt1 = req.body.option1;
+    let opt2 = req.body.option2;
+
+    let options = [];
+    options.push({title: opt1, votes: 0});
+    options.push({title: opt2, votes: 0});
 
     var poll = new Poll({
-        postedBy: userId,
-        question: question,
+        postedBy: "dummyID",
+        question: req.body.title,
         options: options,
         comments: new Array(),
         datePosted: Date.now(),
         pollId: generateUUID(),
     });
+
+    poll.save((err) =>
+    {
+        //some error handling here
+    });
+
+
+
 
 
 
