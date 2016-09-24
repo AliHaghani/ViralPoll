@@ -2,7 +2,19 @@
  * Created by Ali on 2016-09-23.
  */
 
-pollSchema.methods.newPoll = function (userId, question, options) {
+const async = require('async');
+const nodemailer = require('nodemailer');
+const passport = require('passport');
+const User = require('../models/User');
+const Poll = require('../models/Poll');
+
+
+
+/**
+ * POST /poll
+ * Submit a poll made by user.
+ */
+exports.newPoll = function (userId, question, options) {
 
     var poll = new Poll({
         postedBy: userId,
@@ -12,6 +24,8 @@ pollSchema.methods.newPoll = function (userId, question, options) {
         datePosted: Date.now(),
         pollId: generateUUID(),
     })
+
+
 
 };
 
@@ -27,3 +41,28 @@ function generateUUID(){
     });
     return uuid;
 }
+
+/**
+ * POST /poll
+ * Submit a poll made by user.
+ */
+exports.postPoll = (req, res, next) => {
+    const errors = req.validationErrors();
+
+    if (errors) {
+        req.flash('errors', errors);
+        return res.redirect('/'); // Go back to home page
+    }
+    passport.authenticate('local', (err, user, info) => {
+        if (err) { return next(err); }
+        if (!user) {
+            req.flash('errors', info);
+            return res.redirect('/login');
+        }
+        req.logIn(user, (err) => {
+            if (err) { return next(err); }
+            req.flash('success', { msg: 'Success! You are logged in.' });
+            res.redirect(req.session.returnTo || '/');
+        });
+    })(req, res, next);
+};
