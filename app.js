@@ -130,8 +130,8 @@ app.get('/contact', contactController.getContact);
 app.post('/contact', contactController.postContact);
 app.get('/newpoll', newPollController.getNewPoll);
 app.post('/newpoll', newPollController.postNewPoll);
-app.get('/account/mypolls', newPollController.getmyPolls);
-app.put('/polls/{poll_id}/options', newPollController.updateVote);
+app.get('/account/mypolls', homeController.getMyPolls);
+app.post('/updateVotes', newPollController.updateVotes);
 app.get('/polls/{poll_id}', newPollController.getVoteCount);
 
 

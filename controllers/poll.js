@@ -9,8 +9,6 @@ const User = require('../models/User');
 const Poll = require('../models/Poll');
 
 
-
-
 /**
  * GET /newpoll
  * New poll page.
@@ -85,31 +83,83 @@ exports.getPolls = (req, res) => {
         );
 
         return polls;
-    });
+    }).sort({'createdAt': -1});
 };
 
-/*
- * GET/mypolls
- *
 
-*/
+/*
+* GET /poll
+* get a single poll
+* */
+
+//exports.getPoll = (req, res) =
+
 /**
- * PUT /polls/{poll_id}/options
+ * POST /updateVotes
  * Update vote.
  */
 
-exports.updateVote = (req, res, poll_id, option) => {
-    Poll.findOne({_id: poll_id}, function (err, poll) {
-        poll.options[option]++;
+exports.updateVotes = (req, res) => {
+    var option = req.body.option;
+    var poll_id = req.body.poll_id;
 
-        poll.save(function (err) {
-            if(err) {
-                console.error('ERROR!');
-            }
-        });
-    });
+    Poll.update({_id: poll_id},
+        {
+            options: option
+        },
 
-}
+        function(err, numberAffected, rawResponse)
+        {
+            if(err)
+                var test = "";
+
+            res.writeHead(200, {'Content-Type': 'application/json'});
+            res.write("teeeeeeeeeeeeeeest");
+            res.end();
+
+        }
+
+    );
+
+    // Poll.findOne({_id: poll_id}, function (err, poll) {
+    //
+    //
+    //     poll.save((err) =>
+    //     {
+    //         if (err){
+    //             console.log('ERROR!');
+    //         }
+    //         //some error handling here
+    //         res.contentType('application/json');
+    //         res.send(JSON.stringify(poll));
+    //     });
+    //
+    // });
+    //
+    // Poll.update({_id: poll_id, "options.title": optionTitle},
+    //     {$set:
+    //     {
+    //         optionToUpd: votes
+    //     }
+    //     },
+    //
+    //     function(err)
+    //     {
+    //         if(err) var test = "";
+    //
+    //
+    //
+    //     }
+    //
+    //
+    // );
+
+
+
+};
+
+
+
 
 /**
  * GET /polls/{poll_id}
@@ -125,25 +175,4 @@ exports.getVoteCount = (req, res, poll_id) => {
         }
     });
     return totalVotes;
-}
-
-
-/*
- * GET/myPolls
- * */
-
-exports.getmyPolls = (req, res) =>
-{
-    var userID = req.user._doc._id;
-    Poll.find({postedBy:"dummyID"}, function(err, myPolls) {
-        if (err) throw err;
-
-        res.render('account/mypolls', {
-                title: "My Polls",
-                myPollItems: myPolls
-            }
-
-        );
-
-        return myPolls;
-    })};
+};
