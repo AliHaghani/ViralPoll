@@ -1,5 +1,4 @@
 extends layout
-
 block content
 
   p.lead You ask, the world answers.
@@ -7,12 +6,13 @@ block content
   .row
     .col-sm-6
       h2 Recent
-        -var polls = ["#{pollItems}"]
-          each poll in pollItems
-            h3=poll._doc.question
-            ul
-            each q in poll._doc.options
-              li=q._doc.title
+        div(id="recentPolls")
+
+        script(type='text/javascript').
+          var polls =!{JSON.stringify(pollItems)}
+
+
+
 
 
 
