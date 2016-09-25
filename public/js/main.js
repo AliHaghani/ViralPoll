@@ -3,8 +3,9 @@ var layout = {
     xaxis: {
         title: "Votes",
         rangemode: 'tozero',
-        autorange: false,
-        fixedrange: true
+        autorange: true,
+        dtick: 1,
+        fixedrange: false
     }
 
 };
@@ -26,6 +27,7 @@ $('#recentPolls').ready(function() {
                 optionVotes.push(curr.votes);
                 options.push(curr.title);
             }
+
 
             var pollID = polls[i]._id;
             var data = [{
@@ -59,6 +61,8 @@ function optionClicked(data)
     {
         var pollID = data.points[0].data.pollID;
         var option = [];
+        var newX = [];
+        var newY = [];
         for(var i=0; i < data.points[0].data.x.length; i++)
         {
             let votes = data.points[0].data.x[i];
@@ -67,6 +71,8 @@ function optionClicked(data)
                 votes++;
 
             var curr = { title: title, votes: votes};
+            newX.push(votes);
+            newY.push(title);
             option.push(curr);
         }
 
@@ -95,21 +101,6 @@ function optionClicked(data)
 
         request.onreadystatechange = function(response)
         {
-            var res = response;
-            var check = request;
-            // var optVotes = data.points[0].data.x;
-            // optVotes[data.points[0].pointNumber]++;
-            // layout.title = data.points[0].data.question;
-            // var data = [{
-            //     type: 'bar',
-            //     orientation: 'h',
-            //     y: data.points[0].data.y,
-            //     x: optVotes,
-            //     pollID: pollID,
-            // }];
-            //
-            // Plotly.newPlot('pollGraph' + pollID, data, layout, {displayModeBar: false});
-
 
         };
 
@@ -121,13 +112,14 @@ function optionClicked(data)
         request.open('POST', '/updateVotes');
         request.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
         request.setRequestHeader('X-CSRF-Token', $('meta[name=csrf-token]').attr('content'));
-
-
-
-
         request.send(params);
 
-
+        var pollGraph = document.getElementById('pollGraph' + pollID);
+        //Plotly.deleteTraces(pollGraph, [0, 1]);
+        pollGraph.data[0].x = newX;
+        pollGraph.data[0].y = newY;
+        layout.title = pollGraph.data[0].question;
+        Plotly.redraw(pollGraph);
 
 
 
