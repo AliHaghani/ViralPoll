@@ -103,3 +103,19 @@ exports.updateVote = (req, res, poll_id, option) => {
     });
 
 }
+
+/**
+ * GET /polls/{poll_id}
+ * Get total vote count.
+ */
+
+exports.getVoteCount = (req, res, poll_id) => {
+    Poll.findOne({_id: poll_id}, function (err, poll) {
+        var totalVotes = 0;
+
+        for (var i = 0; i < poll.options.length; i++){
+            totalVotes += poll.options[i].votes;
+        }
+    });
+    return totalVotes;
+}
