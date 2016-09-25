@@ -4,7 +4,7 @@
 const mongoose = require('mongoose');
 
 const pollSchema = new mongoose.Schema({
-    postedBy: String, // temporary, should be user
+    postedBy: Array, // temporary, should be user
     question: String,
     options: [{title: String, votes: Number}],
     comments: [{ value: String, userID: Number}],

@@ -48,7 +48,7 @@ exports.postNewPoll = function (req, res, next) {
 
 
     const poll = new Poll({
-        postedBy: "dummyID",
+        postedBy: req.user._doc._id.id,
         question: req.body.title,
         options: options,
         comments: new Array(),
