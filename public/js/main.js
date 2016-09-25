@@ -11,41 +11,43 @@ var layout = {
 };
 
 $('#recentPolls').ready(function() {
-    if(typeof polls !== typeof undefined) {
-        var recentPolls = $('#recentPolls');
-        for(var i = 0; i < polls.length; i++) {
+    if(typeof polls !== typeof undefined || typeof myPolls !== typeof undefined) {
+        var recentPolls = typeof polls !== typeof undefined ?  $('#recentPolls') : $('#myPolls');
+        var currPolls = typeof polls !== typeof undefined ? polls : myPolls;
+        for(var i = 0; i < currPolls.length; i++) {
             var pollDiv = document.createElement("div");
-            pollDiv.id = "pollGraph" + polls[i]._id;
-            $('#recentPolls').append(pollDiv);
+            pollDiv.id = "pollGraph" + currPolls[i]._id;
+            recentPolls.append(pollDiv);
 
             var optionVotes = new Array();
             var options = new Array();
 
-            for(var opt = 0; opt < polls[i].options.length; opt++)
+            for(var opt = 0; opt < currPolls[i].options.length; opt++)
             {
-                var curr = polls[i].options[opt];
+                var curr = currPolls[i].options[opt];
                 optionVotes.push(curr.votes);
                 options.push(curr.title);
             }
 
 
-            var pollID = polls[i]._id;
+            var pollID = currPolls[i]._id;
             var data = [{
                 type: 'bar',
                 orientation: 'h',
                 y: options,
                 x: optionVotes,
                 pollID: pollID,
-                question: polls[i].question
+                question: currPolls[i].question
             }];
 
 
-            layout.title = polls[i].question;
+            layout.title = currPolls[i].question;
             Plotly.newPlot('pollGraph' + pollID, data, layout, {displayModeBar: false});
 
             var myPlot = document.getElementById('pollGraph' + pollID);
 
-            myPlot.on('plotly_click', function(data) {optionClicked(data);} );
+            if(typeof currPolls === typeof polls)
+                myPlot.on('plotly_click', function(data) {optionClicked(data);} );
         }
 
 

@@ -176,3 +176,20 @@ exports.getVoteCount = (req, res, poll_id) => {
     });
     return totalVotes;
 };
+
+
+exports.getPollsByUserID = (req, res) =>
+{
+    Poll.find({postedBy: req.user._doc._id.id}, function(err, polls)
+    {
+        res.render('account/mypolls', {
+                title: "My Polls",
+                pollItems: polls
+            }
+
+        );
+
+        return polls;
+
+    });
+};
