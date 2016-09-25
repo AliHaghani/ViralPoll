@@ -75,6 +75,7 @@ exports.getPolls = (req, res) => {
         if (err) throw err;
 
         res.render('home', {
+                title: "Home Page",
                 pollItems: polls
             }
 
