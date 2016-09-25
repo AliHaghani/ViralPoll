@@ -68,7 +68,7 @@ exports.postNewPoll = function (req, res, next) {
 };
 
 /**
- * GET /newpoll
+ * GET /polls
  * New poll page.
  */
 exports.getPolls = (req, res) => {
@@ -85,3 +85,21 @@ exports.getPolls = (req, res) => {
         return polls;
     });
 };
+
+/**
+ * PUT /vote/id
+ * Update vote.
+ */
+
+exports.updateVote = (req, res, pollid, option) => {
+    Poll.findOne({_id: pollid}, function (err, poll) {
+        poll.options[option]++;
+
+        poll.save(function (err) {
+            if(err) {
+                console.error('ERROR!');
+            }
+        });
+    });
+
+}
