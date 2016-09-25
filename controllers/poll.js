@@ -28,7 +28,7 @@ exports.postNewPoll = function (req, res, next) {
     req.assert('title', "Question cannot be blank.").notEmpty();
     req.assert('option1', "Option 1 cannot be blank.").notEmpty();
     req.assert('option2', "Option 2 cannot be blank.").notEmpty();
-    //req.assert(req.user,"You must login" ).notEmpty();
+    //req.assert(req.user, "You must login to post a poll.").notEmpty();
 
     const errors = req.validationErrors();
 
@@ -66,29 +66,21 @@ exports.postNewPoll = function (req, res, next) {
 
 };
 
-
-
 /**
- * POST /poll
- * Submit a poll made by user.
+ * GET /newpoll
+ * New poll page.
  */
-exports.postPoll = (req, res, next) => {
-    const errors = req.validationErrors();
+exports.getPolls = (req, res) => {
+    Poll.find({}, function(err, polls) {
+        if (err) throw err;
 
-    if (errors) {
-        req.flash('errors', errors);
-        return res.redirect('/'); // Go back to home page
-    }
-    passport.authenticate('local', (err, user, info) => {
-        if (err) { return next(err); }
-        if (!user) {
-            req.flash('errors', info);
-            return res.redirect('/login');
-        }
-        req.logIn(user, (err) => {
-            if (err) { return next(err); }
-            req.flash('success', { msg: 'Success! You are logged in.' });
-            res.redirect(req.session.returnTo || '/');
-        });
-    })(req, res, next);
+        res.render('home', {
+                title: "Home Page",
+                pollItems: polls
+            }
+
+        );
+
+        return polls;
+    });
 };
