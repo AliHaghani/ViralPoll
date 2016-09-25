@@ -7,12 +7,18 @@ block content
   .row
     .col-sm-6
       h2 Recent
-      ul
         -var polls = ["#{pollItems}"]
-          each p in pollItems
-            li= p._doc.question
+          each poll in pollItems
+            h3=poll._doc.question
+            ul
+            each q in poll._doc.options
+              li=q._doc.title
 
-        a.btn.btn-default(href='/polls', role='button') View more... »
+
+
+
+
+        //a.btn.btn-default(href='/', role='button') View more... »
 
     .col-sm-6
       h2 Top
