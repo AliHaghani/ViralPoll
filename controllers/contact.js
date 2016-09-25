@@ -18,15 +18,6 @@ exports.getContact = (req, res) => {
   });
 };
 
-/**
- * GET /contactclone
- * @param req
- * @param res
- */
-exports.getContactClone = (req, res) =>
-{
-  res.sendFile(path.join(__dirname + "/../views/contactclone.html"));
-};
 
 /**
  * POST /contact
