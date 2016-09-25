@@ -130,7 +130,8 @@ app.get('/contact', contactController.getContact);
 app.post('/contact', contactController.postContact);
 app.get('/newpoll', newPollController.getNewPoll);
 app.post('/newpoll', newPollController.postNewPoll);
-app.get('/account/mypolls', homeController.getMyPolls)
+app.get('/account/mypolls', homeController.getMyPolls);
+app.put('/polls/{poll_id}/options', newPollController.updateVote);
 
 app.get('/account', passportConfig.isAuthenticated, userController.getAccount);
 app.post('/account/profile', passportConfig.isAuthenticated, userController.postUpdateProfile);

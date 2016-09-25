@@ -87,12 +87,12 @@ exports.getPolls = (req, res) => {
 };
 
 /**
- * PUT /vote/id
+ * PUT /polls/{poll_id}/options
  * Update vote.
  */
 
-exports.updateVote = (req, res, pollid, option) => {
-    Poll.findOne({_id: pollid}, function (err, poll) {
+exports.updateVote = (req, res, poll_id, option) => {
+    Poll.findOne({_id: poll_id}, function (err, poll) {
         poll.options[option]++;
 
         poll.save(function (err) {
