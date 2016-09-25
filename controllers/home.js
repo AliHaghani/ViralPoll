@@ -7,3 +7,15 @@ exports.index = (req, res) => {
     title: 'Home'
   });
 };
+
+
+/*
+* GET/mypolls
+* */
+exports.getMyPolls = (req, res) =>
+{
+  res.render('account/mypolls', {
+      title: 'My Polls'
+  });
+
+};

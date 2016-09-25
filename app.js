@@ -131,6 +131,7 @@ app.get('/contactclone', contactController.getContactClone);
 app.post('/contact', contactController.postContact);
 app.get('/newpoll', newPollController.getNewPoll);
 app.post('/newpoll', newPollController.postNewPoll);
+app.get('/account/mypolls', homeController.getMyPolls)
 
 app.get('/account', passportConfig.isAuthenticated, userController.getAccount);
 app.post('/account/profile', passportConfig.isAuthenticated, userController.postUpdateProfile);
