@@ -9,6 +9,8 @@ const User = require('../models/User');
 const Poll = require('../models/Poll');
 
 
+
+
 /**
  * GET /newpoll
  * New poll page.
@@ -86,6 +88,11 @@ exports.getPolls = (req, res) => {
     });
 };
 
+/*
+ * GET/mypolls
+ *
+
+*/
 /**
  * PUT /polls/{poll_id}/options
  * Update vote.
@@ -119,3 +126,24 @@ exports.getVoteCount = (req, res, poll_id) => {
     });
     return totalVotes;
 }
+
+
+/*
+ * GET/myPolls
+ * */
+
+exports.getmyPolls = (req, res) =>
+{
+    var userID = req.user._doc._id;
+    Poll.find({postedBy:"dummyID"}, function(err, myPolls) {
+        if (err) throw err;
+
+        res.render('account/mypolls', {
+                title: "My Polls",
+                myPollItems: myPolls
+            }
+
+        );
+
+        return myPolls;
+    })};

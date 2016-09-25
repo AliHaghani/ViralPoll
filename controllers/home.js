@@ -1,3 +1,4 @@
+
 /**
  * GET /
  * Home page.
@@ -9,13 +10,4 @@ exports.index = (req, res) => {
 };
 
 
-/*
-* GET/mypolls
-* */
-exports.getMyPolls = (req, res) =>
-{
-  res.render('account/mypolls', {
-      title: 'My Polls'
-  });
 
-};
