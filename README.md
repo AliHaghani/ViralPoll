@@ -1,6 +1,6 @@
-ViralPoll
+<h1>ViralPoll</h1>
 
-Polling made social.
+A poll-focused social network for the web that allows users to participate in various public opinion polls.
 
 Built by:
 Ali Haghani - http://github.com/AliHaghani
